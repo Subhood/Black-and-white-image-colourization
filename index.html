@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Colorization</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+    <script>
+        function saveImage(imageUrl) {
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = imageUrl.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<body>
+    <h1>Black and White Colorization</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="image">Upload a black and white image:</label>
+        <input type="file" name="image" id="image" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="result">
+        {% if original_image and colorized_image %}
+            <h2>Results:</h2>
+            <h3>Original Image:</h3>
+            <img src="{{ original_image }}" alt="Original Image">
+            <button class="save-btn" onclick="saveImage('{{ original_image }}')">Save Original Image</button>
+            <h3>Colorized Image:</h3>
+            <img src="{{ colorized_image }}" alt="Colorized Image">
+            <button class="save-btn" onclick="saveImage('{{ colorized_image }}')">Save Colorized Image</button>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+ 
